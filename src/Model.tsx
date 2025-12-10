@@ -2,14 +2,9 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Avatar, Typography } 
 import { Box } from "@mui/system"
 
 const availableModels = [
-  "Eye of Deep Space-Thoth",
-  "Eye of Deep Space - Thoth 2",
-  "Eye of Deep Space - Brahma",
-  "Eye of Deep Space - Brahma 2",
-  "Eye of Deep Space-Selene",
-  "Eye of Deep Space-Selene 2",
-  "Mingchao-Yinlin",
-  "Original God-Ying",
+  "GawrGura",
+  "GawrGura_hoodoff",
+  "æä",
 ]
 
 function Model({ setSelectedModel }: { setSelectedModel: (model: string) => void }): JSX.Element {

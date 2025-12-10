@@ -100,7 +100,51 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   },
 }))
 
-
+const usedKeyBones = [
+  "上半身",
+  "下半身",
+  "首",
+  "左足",
+  "右足",
+  "左足首",
+  "右足首",
+  "左腕",
+  "右腕",
+  "左ひじ",
+  "右ひじ",
+  "左手首",
+  "右手首",
+  "左親指１",
+  "左親指２",
+  "左人指１",
+  "左人指２",
+  "左人指３",
+  "左中指１",
+  "左中指２",
+  "左中指３",
+  "左薬指１",
+  "左薬指２",
+  "左薬指３",
+  "左小指１",
+  "左小指２",
+  "左小指３",
+  "右親指１",
+  "右親指２",
+  "右人指１",
+  "右人指２",
+  "右人指３",
+  "右中指１",
+  "右中指２",
+  "右中指３",
+  "右薬指１",
+  "右薬指２",
+  "右薬指３",
+  "右小指１",
+  "右小指２",
+  "右小指３",
+  "左目",
+  "右目",
+]
 
 function MMDScene({
   body,
@@ -398,7 +442,7 @@ function MMDScene({
         mmdModelRef.current.mesh.dispose()
       }
       setSelectedAnimation("")
-      SceneLoader.ImportMeshAsync(undefined, `/model/${selectedModel}/`, `${selectedModel}.pmx`, sceneRef.current).then(
+      SceneLoader.ImportMeshAsync(undefined, `../GawrGura/`, `${selectedModel}.pmx`, sceneRef.current).then(
         (result) => {
           const mesh = result.meshes[0]
           for (const m of mesh.metadata.meshes) {
@@ -489,16 +533,40 @@ function MMDScene({
         mmdModel.morph.setMorphWeight(morphName, Math.max(0, Math.min(1, newValue)))
       }
 
-      getBone.position = new Vector3(
-        body.mainBody![27].x * 10,
-        -body.mainBody![27].y * 10 + 7,
-        body.mainBody![27].z * 10
-      )
-      getBone.position = new Vector3(
-        body.mainBody![28].x * 10,
-        -body.mainBody![28].y * 10 + 7,
-        body.mainBody![28].z * 10
-      )
+      // Apply bone rotations from pose solver
+      setBoneRotation(getBone("上半身"), result.upper_body)
+      setBoneRotation(getBone("下半身"), result.lower_body)
+      setBoneRotation(getBone("首"), result.neck)
+      setBoneRotation(getBone("左足"), result.left_hip)
+      setBoneRotation(getBone("右足"), result.right_hip)
+      setBoneRotation(getBone("左足首"), result.left_foot)
+      setBoneRotation(getBone("右足首"), result.right_foot)
+      setBoneRotation(getBone("左腕"), result.left_upper_arm)
+      setBoneRotation(getBone("右腕"), result.right_upper_arm)
+      setBoneRotation(getBone("左ひじ"), result.left_lower_arm)
+      setBoneRotation(getBone("右ひじ"), result.right_lower_arm)
+      setBoneRotation(getBone("左手首"), result.left_wrist)
+      setBoneRotation(getBone("右手首"), result.right_wrist)
+      setBoneRotation(getBone("左目"), result.left_eye_rotation)
+      setBoneRotation(getBone("右目"), result.right_eye_rotation)
+
+      const leftAnkle = getBone("左足首")
+      const rightAnkle = getBone("右足首")
+      
+      if (leftAnkle) {
+        leftAnkle.position = new Vector3(
+          body.mainBody![27].x * 10,
+          -body.mainBody![27].y * 10 + 7,
+          body.mainBody![27].z * 10
+        )
+      }
+      if (rightAnkle) {
+        rightAnkle.position = new Vector3(
+          body.mainBody![28].x * 10,
+          -body.mainBody![28].y * 10 + 7,
+          body.mainBody![28].z * 10
+        )
+      }
     }
     if (sceneRef.current && mmdModelRef.current) {
       updateMMDPose(mmdModelRef.current, body)

@@ -23,7 +23,7 @@ function App(): JSX.Element {
   const [lerpFactor, setLerpFactor] = useState<number>(0.5);
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("");
-  const [selectedModel, setSelectedModel] = useState<string>("Eye of Deep Space-Thoth");
+  const [selectedModel, setSelectedModel] = useState<string>("GawrGura");
   const [selectedBackground, setSelectedBackground] = useState<string>("Static");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [selectedAnimation, setSelectedAnimation] = useState<string>("");
